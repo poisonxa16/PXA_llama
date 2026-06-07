@@ -86,6 +86,21 @@ Distinct‑codeword cross‑bleed test (each concurrent slot must return **only 
 
 ## Quick start (10 minutes on a P100)
 
+### Option A — grab the prebuilt P100 binary (fastest)
+A ready-to-run `llama-server` for the **Tesla P100 (sm_60)** is attached to the
+[**latest release**](https://github.com/poisonxa16/PXA_llama/releases/latest) (the v4 fix + the
+F16/FORCE_DMMV speed build):
+```bash
+# download pxa_llama-sm60-p100-linux-x64.tar.gz from the Releases page, then:
+tar xzf pxa_llama-sm60-p100-linux-x64.tar.gz && cd pxa_llama-sm60-p100-linux-x64
+./run.sh -m model.gguf -c 16384 -ngl 99 -np 4 -fa on -ctk q8_0 -ctv q8_0 --jinja --host 0.0.0.0 --port 8088
+```
+> P100 (sm_60) only — **not** for a 1080 Ti. Needs glibc ≥ 2.38 / a CUDA 12.x runtime; easiest is to run
+> inside `nvidia/cuda:12.8.1-devel-ubuntu24.04` with `--runtime=nvidia`. `run.sh` just sets
+> `LD_LIBRARY_PATH=./lib` and execs `./llama-server`.
+
+### Option B — build from source
+
 ```bash
 # 1. Get the upstream source (pxa_llama is a patch set on top of ik_llama.cpp)
 git clone https://github.com/ikawrakow/ik_llama.cpp
