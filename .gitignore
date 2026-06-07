@@ -1,5 +1,7 @@
-# Build artifacts
-build*/
+# CMake build-output dirs (NOT our build/ scripts directory)
+build-speed/
+build-multicard/
+cmake-build-*/
 *.o
 *.so
 *.a
