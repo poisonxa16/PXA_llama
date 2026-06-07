@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Upstream ik_llama.cpp
+    url: https://github.com/ikawrakow/ik_llama.cpp
+    about: Engine internals, kernels, quants, and most non-Pascal-specific issues likely belong upstream.
+  - name: Upstream llama.cpp
+    url: https://github.com/ggml-org/llama.cpp
+    about: The original project.

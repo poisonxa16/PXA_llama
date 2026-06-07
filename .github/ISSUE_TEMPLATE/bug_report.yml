@@ -1,0 +1,58 @@
+name: Bug report
+description: Something doesn't work (crash, corruption, wrong output, build failure)
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. **Hardware details matter a lot here** — pxa_llama is Pascal-specific.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you expected vs what you got. For corruption, paste the concurrency-test output.
+      placeholder: |
+        e.g. np=4 hybrid decode returns cross-conversation text...
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU(s)
+      placeholder: e.g. 1x Tesla P100-PCIE-16GB (sm_60); or P100 + GTX 1080 Ti
+    validations:
+      required: true
+  - type: input
+    id: driver
+    attributes:
+      label: NVIDIA driver / CUDA
+      placeholder: e.g. driver 550.x, CUDA 12.8
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model (arch + quant)
+      placeholder: e.g. Qwen3.5-122B-A10B Q3_K_M (qwen35moe, hybrid)
+    validations:
+      required: true
+  - type: input
+    id: build
+    attributes:
+      label: How you got the binary
+      placeholder: e.g. v0.1.0 release asset / built with build-sm60.sh / build-multicard.sh
+    validations:
+      required: true
+  - type: textarea
+    id: cmd
+    attributes:
+      label: Launch command
+      render: bash
+      placeholder: ./run.sh -m model.gguf -c 16384 -ngl 99 -np 4 -fa on ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      render: text

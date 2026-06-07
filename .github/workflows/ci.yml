@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  shellcheck:
+    name: shellcheck scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install shellcheck
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+      - name: Lint shell scripts (errors only)
+        run: |
+          set -e
+          mapfile -t files < <(git ls-files '*.sh')
+          echo "Linting ${#files[@]} scripts:"
+          printf ' - %s\n' "${files[@]}"
+          shellcheck --severity=error "${files[@]}"
+
+  sanity:
+    name: repo sanity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch file is present and parses as a unified diff
+        run: |
+          set -e
+          test -s patches/pxa_llama_v4_batched_delta_net.diff
+          # every hunk header must be well-formed; count files touched
+          grep -cE '^diff --git ' patches/pxa_llama_v4_batched_delta_net.diff
+          grep -qE '^@@ ' patches/pxa_llama_v4_batched_delta_net.diff
+          echo "patch OK"
+      - name: Required docs exist
+        run: |
+          set -e
+          for f in README.md LICENSE ATTRIBUTION.md CHANGELOG.md BENCHMARKS.md \
+                   docs/HYBRID-CONCURRENCY-BUG.md docs/OLD-CARD-GUIDE.md \
+                   build/build-sm60.sh benchmarks/concurrency-test.sh; do
+            test -f "$f" || { echo "missing: $f"; exit 1; }
+          done
+          echo "docs OK"

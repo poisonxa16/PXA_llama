@@ -1,5 +1,11 @@
 # pxa_llama
 
+[![ci](https://github.com/poisonxa16/PXA_llama/actions/workflows/ci.yml/badge.svg)](https://github.com/poisonxa16/PXA_llama/actions/workflows/ci.yml)
+[![latest release](https://img.shields.io/github/v/release/poisonxa16/PXA_llama?sort=semver)](https://github.com/poisonxa16/PXA_llama/releases/latest)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![GPU: Tesla P100 / 1080 Ti](https://img.shields.io/badge/GPU-Tesla%20P100%20%2F%20GTX%201080%20Ti-76b900.svg)](docs/OLD-CARD-GUIDE.md)
+[![based on ik_llama.cpp](https://img.shields.io/badge/fork%20of-ik__llama.cpp-555.svg)](https://github.com/ikawrakow/ik_llama.cpp)
+
 **Run modern hybrid / MoE LLMs *correctly and fast* on cheap, old Tesla P100 / GTX 1080 Ti cards.**
 
 pxa_llama is a fork of [ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp) (itself a fork of
