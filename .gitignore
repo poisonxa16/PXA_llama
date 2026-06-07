@@ -1,0 +1,19 @@
+# Build artifacts
+build*/
+*.o
+*.so
+*.a
+*.gguf
+*.bin
+
+# Models / large data (don't commit weights or corpora)
+models/
+*.onnx
+corpus.jsonl
+pairs.jsonl
+
+# Editor / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/

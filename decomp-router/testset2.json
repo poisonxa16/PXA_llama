@@ -1,0 +1,55 @@
+{
+  "_doc": "HARD held-out gauntlet — novel phrasings/structures NOT in the training templates nor testset.json. Tests true robustness for 'opus-microme'. fanout_expected = the DAG has >=2 concurrent nodes.",
+  "cases": [
+    {"id":"h-atom-01","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"What's the weather in Tokyo, Japan?"},
+    {"id":"h-atom-02","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"Translate 'hello, world' into French."},
+    {"id":"h-atom-03","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"Write a function that takes a, b, and c and returns their sum."},
+    {"id":"h-atom-04","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"Explain the pros and cons of remote work."},
+    {"id":"h-atom-05","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"Summarize the plot of Pride and Prejudice."},
+    {"id":"h-atom-06","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"List the steps to make a paper airplane."},
+
+    {"id":"h-par-01","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Tell me a joke, recommend a movie, and suggest a book."},
+    {"id":"h-par-02","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"What's 5 factorial, what's the capital of Peru, and how tall is Everest?"},
+    {"id":"h-par-03","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Define recursion, define iteration, and define memoization."},
+    {"id":"h-par-04","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Convert 100 USD to euros, 50 pounds to dollars, and 200 yen to dollars."},
+    {"id":"h-par-05","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Give me a synonym for happy, an antonym for fast, and a rhyme for cat."},
+    {"id":"h-par-06","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Write a tagline for a bakery, a slogan for a gym, and a motto for a school."},
+    {"id":"h-par-07","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Name a river in Egypt, a mountain in Nepal, and a desert in Chile."},
+
+    {"id":"h-dep-01","class":"dependent","adversarial":false,"fanout_expected":false,"prompt":"Write a haiku, then translate it into French."},
+    {"id":"h-dep-02","class":"dependent","adversarial":false,"fanout_expected":false,"prompt":"Generate a random number, then tell me whether it is prime."},
+    {"id":"h-dep-03","class":"dependent","adversarial":false,"fanout_expected":false,"prompt":"Draft an email to the team, then rewrite it in a more formal tone."},
+    {"id":"h-dep-04","class":"dependent","adversarial":false,"fanout_expected":false,"prompt":"Find the largest file in the directory, then delete it."},
+
+    {"id":"h-adv-01","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Calculate 15% of 240, and round the result to the nearest ten."},
+    {"id":"h-adv-02","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Define a function f(x) = x squared, and evaluate f at 7."},
+    {"id":"h-adv-03","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Write a short story, and give it a fitting title."},
+    {"id":"h-adv-04","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Recommend a restaurant nearby, and book a table there for two."},
+    {"id":"h-adv-05","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"List the eight planets, and sort them by diameter."},
+    {"id":"h-adv-06","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Pick two random numbers, and multiply them together."},
+    {"id":"h-adv-07","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Name a fruit, and describe its taste."},
+    {"id":"h-adv-08","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Translate this sentence into Spanish, and then back into English."},
+    {"id":"h-adv-09","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Generate a password, and tell me how strong it is."},
+    {"id":"h-adv-10","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Write a SQL query for active users, and explain what it does."},
+    {"id":"h-adv-11","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Roll a six-sided die, and double whatever you get."},
+
+    {"id":"h-mix-01","class":"mixed","adversarial":false,"fanout_expected":true,"prompt":"Fetch the current temperature, convert it to Fahrenheit, and separately tell me a joke."},
+    {"id":"h-mix-02","class":"mixed","adversarial":false,"fanout_expected":true,"prompt":"Read the log file, count the error lines, and also write a haiku about debugging."},
+    {"id":"h-mix-03","class":"mixed","adversarial":false,"fanout_expected":true,"prompt":"Compute the average of these numbers, then the standard deviation, and also define what variance means."},
+
+    {"id":"h-fanin-01","class":"mixed","adversarial":false,"fanout_expected":true,"prompt":"Describe cats, describe dogs, then compare the two as pets."},
+    {"id":"h-fanin-02","class":"mixed","adversarial":false,"fanout_expected":true,"prompt":"List the pros, list the cons, then give your overall verdict."},
+    {"id":"h-fanin-03","class":"mixed","adversarial":false,"fanout_expected":true,"prompt":"Summarize the bull case, summarize the bear case, and then conclude which is stronger."},
+
+    {"id":"h-chain-01","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Write the code, test it, fix the failures, then document it."},
+    {"id":"h-chain-02","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Choose a topic, research it, outline it, then draft the essay."},
+    {"id":"h-chain-03","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Take a number, square it, then subtract ten from that."},
+
+    {"id":"h-edge-01","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Explain what a CPU does, what a GPU does, and what RAM does."},
+    {"id":"h-edge-02","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Shuffle this deck of cards, and deal the top five."},
+    {"id":"h-edge-03","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Write me a limerick about Mondays, and a haiku about coffee."},
+    {"id":"h-edge-04","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Open the spreadsheet, and total column C."},
+    {"id":"h-edge-05","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"Compare the economies of Japan and Germany."},
+    {"id":"h-edge-06","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Give me the boiling point of water, the freezing point of mercury, and the melting point of iron."}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "_doc": "BRUTAL gauntlet — Spanish + near-impossible English traps (commas/and inside fixed phrases & quotes, possessive anaphora, mixed). Held out. Squeeze-the-juice test for opus-microme.",
+  "cases": [
+    {"id":"es-atom-01","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"¿Cuál es la capital de Francia?"},
+    {"id":"es-atom-02","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"¿Qué tiempo hace en Lima, Perú?"},
+    {"id":"es-atom-03","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"Explica las ventajas y desventajas del trabajo remoto."},
+    {"id":"es-par-01","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Cuéntame un chiste, recomienda una película y sugiere un libro."},
+    {"id":"es-par-02","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Define la recursión, define la iteración y define la memorización."},
+    {"id":"es-par-03","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Traduce 'hola' al inglés, al francés y al alemán."},
+    {"id":"es-dep-01","class":"dependent","adversarial":false,"fanout_expected":false,"prompt":"Escribe un haiku, luego tradúcelo al inglés."},
+    {"id":"es-dep-02","class":"dependent","adversarial":false,"fanout_expected":false,"prompt":"Genera un número aleatorio, después dime si es primo."},
+    {"id":"es-adv-01","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Elige un color, y nombra tres cosas de ese color."},
+    {"id":"es-adv-02","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Nombra un animal, y describe su hábitat."},
+    {"id":"es-adv-03","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Abre la hoja de cálculo, y suma la columna C."},
+    {"id":"es-adv-04","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Calcula el 15% de 240, y redondea el resultado a la decena más cercana."},
+    {"id":"es-fanin-01","class":"mixed","adversarial":false,"fanout_expected":true,"prompt":"Resume los pros, resume los contras, y luego da tu veredicto."},
+    {"id":"es-mix-01","class":"mixed","adversarial":false,"fanout_expected":true,"prompt":"Obtén la temperatura actual, conviértela a Fahrenheit, y aparte cuéntame un chiste."},
+
+    {"id":"x-atom-01","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"Translate 'I love New York, NY' into Spanish."},
+    {"id":"x-atom-02","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"Write a function called process(a, b, c) that returns their product."},
+    {"id":"x-atom-03","class":"atomic","adversarial":false,"fanout_expected":false,"prompt":"Discuss the rise and fall of the Roman Empire."},
+    {"id":"x-adv-01","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Compare apples and oranges, and then pick the healthier one."},
+    {"id":"x-adv-02","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"List three prime numbers, and check whether their sum is even."},
+    {"id":"x-adv-03","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Generate two passwords, and tell me which of them is stronger."},
+    {"id":"x-adv-04","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Pick a number between 1 and 10, and tell me whether it is prime."},
+    {"id":"x-par-01","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Give me the capital of Japan, the currency of Brazil, and the population of Canada."},
+    {"id":"x-par-02","class":"parallel","adversarial":false,"fanout_expected":true,"prompt":"Write a haiku about rain, a limerick about cats, and a couplet about the sea."},
+    {"id":"x-chain-01","class":"dependent","adversarial":true,"fanout_expected":false,"prompt":"Pick a movie, watch its trailer, summarize the plot, then rate it out of ten."},
+    {"id":"x-fanin-01","class":"mixed","adversarial":false,"fanout_expected":true,"prompt":"Explain supervised learning, explain unsupervised learning, then contrast the two."}
+  ]
+}
