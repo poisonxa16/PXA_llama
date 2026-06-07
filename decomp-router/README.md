@@ -1,15 +1,19 @@
-# Decomposition router (companion)
+# Built-in fan-out decomposer (a server feature)
 
-An auto, gated, validated **Skeleton‑of‑Thought** for idle multi‑GPU rigs: a purpose‑built ultra‑light model
-decomposes a prompt into a dependency DAG and the engine fans out the **independent** sub‑tasks across np
-slots in parallel, then merges. The point is to cut wall‑clock latency for genuinely multi‑part prompts on a
-rig that has idle slots — *without ever false‑parallelizing a dependent step* (which would corrupt output).
+This is **part of the pxa_llama server**, not a separate stack component: a purpose‑built ultra‑light model
+compiled **into the llama.cpp engine binary** (`llama-decompose-server`), **toggled on/off by a flag**. When
+on, it decomposes a prompt into a dependency DAG and the server **fans the independent sub‑tasks out across
+the cards/slots** in parallel, then merges — *without ever false‑parallelizing a dependent step* (which would
+corrupt output). A **size gate** is built in so it only fans out when the work is substantial enough to pay.
+
+An auto, gated, validated **Skeleton‑of‑Thought**, living inside the engine.
 
 > **Honest framing first.** This is a tailored, gated implementation of a **known idea** — Skeleton‑of‑Thought
 > (Ning et al., arXiv [2307.15337](https://arxiv.org/abs/2307.15337), up to 2.39×). It is **not** a universal
 > free lunch. See "Where it pays / where it doesn't" below. Our contribution is the engineering: a sub‑10ms
 > in‑engine decomposer (instead of using the big LLM to build the skeleton), a dependency‑DAG safety layer, a
-> size gate, and bilingual validation.
+> size gate, bilingual validation — and putting the whole thing *in the server* so it's one flag, not a
+> separate service.
 
 ## opus‑microme — the decomposer model
 

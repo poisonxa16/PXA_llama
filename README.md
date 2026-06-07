@@ -12,6 +12,11 @@ It exists because a ~$150 eBay Tesla P100 has something modern budget cards don'
 732 GB/s HBM2**. With the right build and one real bug fix, it will serve a concurrent 122B‑A10B hybrid
 MoE without cross‑conversation bleed.
 
+**The pitch in one line:** the kernel fix makes np>1 hybrid decoding correct, and a stack of
+Pascal‑specific enhancements — F16/FORCE_DMMV build tuning, MTP self‑speculation, DP4A‑aware multi‑card
+splitting, and a built‑in size‑gated fan‑out decomposer in the server — squeeze the **fastest tok/s these
+old cards can give, on single cards and multi‑card rigs alike.**
+
 > This is an honest fork. See [`ATTRIBUTION.md`](ATTRIBUTION.md) and [`LICENSE`](LICENSE). Everything here
 > is **our delta on top of ik_llama.cpp / llama.cpp**, not a from‑scratch engine. The unique value is the
 > patches in [`patches/`](patches/), the Pascal build tuning, and the measured results in
@@ -53,10 +58,13 @@ Distinct‑codeword cross‑bleed test (each concurrent slot must return **only 
    bandwidth‑bound (measured). Full guide: [`docs/OLD-CARD-GUIDE.md`](docs/OLD-CARD-GUIDE.md).
 4. **MTP (Multi‑Token Prediction) self‑speculation on Pascal** — `--spec-type mtp` gives a clean, lossless
    **+21%** on qwen35moe at np=1, proven on a P100. [`docs/MTP.md`](docs/MTP.md).
-5. **Built‑in decomposition router** (companion) — a 68 MB bilingual cross‑encoder that auto‑decomposes a
-   prompt into a dependency DAG and fans out the *independent* sub‑tasks across np slots: an auto, gated,
-   validated Skeleton‑of‑Thought for idle multi‑GPU rigs. **99/100** on a held‑out gauntlet, **0** dangerous
-   false‑parallels, ~10 ms/decision on CPU. Honest about where it pays. [`decomp-router/`](decomp-router/).
+5. **Built‑in fan‑out decomposer — compiled into the server, toggled on/off by a flag.** A 68 MB bilingual
+   dependency cross‑encoder (`nextn`‑style head, embedded in the llama.cpp binary as `llama-decompose-server`,
+   pure ggml, no Python/ONNX at runtime) that auto‑decomposes a prompt into a dependency DAG and **fans the
+   independent sub‑tasks out across the cards/slots**, with a **built‑in size gate** so it only fans out when
+   the work is substantial enough to pay. An auto, gated, validated Skeleton‑of‑Thought, *inside the engine*.
+   **99/100** on a held‑out gauntlet, **0** dangerous false‑parallels, ~10 ms/decision on CPU. Honest about
+   where it pays. [`decomp-router/`](decomp-router/).
 
 ---
 
@@ -113,11 +121,12 @@ live in [`launchers/`](launchers/). The per‑model "max settings" are in
   slow ALU path). So bandwidth‑oriented levers (KV‑type, context size, `-ser`, IQK same‑size quants,
   spec‑decode for MoE) are **neutral** on one offloaded card — we tested them and say so. See
   [`docs/COMPUTE-BOUND-PASCAL.md`](docs/COMPUTE-BOUND-PASCAL.md).
-- **The fan‑out router only wins on under‑utilized rigs.** It's a tuned, gated implementation of a known
-  idea — **Skeleton‑of‑Thought** (Ning et al., arXiv [2307.15337](https://arxiv.org/abs/2307.15337), up to
-  2.39×). On a busy multi‑tenant server (already batch‑saturated) it doesn't help; on short prompts it loses
-  (N× prefill + token bloat), which is exactly why there's a **size gate**. Our contribution is the
-  engineering for the homelab/personal‑agent niche, not a universal free lunch.
+- **The built‑in fan‑out only wins on under‑utilized rigs** (which is why it's a toggle, off by default). It's
+  a tuned, gated implementation of a known idea — **Skeleton‑of‑Thought** (Ning et al., arXiv
+  [2307.15337](https://arxiv.org/abs/2307.15337), up to 2.39×). On a busy multi‑tenant server (already
+  batch‑saturated) it doesn't help; on short prompts it loses (N× prefill + token bloat), which is exactly
+  why there's a **size gate**. Our contribution is the engineering — putting it *in the server* — for the
+  homelab/personal‑agent niche, not a universal free lunch.
 - **The real speed jump is more cards, not more tuning.** One P100 is ~55 tok/s (30B‑A3B) / ~25 tok/s
   (offloaded 80B); the only path past that is a full‑GPU multi‑P100 rig (no PCIe offload wall).
 - **MTP is a np=1 / low‑batch win** and only engages on GGUFs that retain the `nextn` tensors.
@@ -141,7 +150,7 @@ docs/
 build/                     – sm_60 (P100) and multi-card (sm_60;61) build scripts + notes
 benchmarks/                – the concurrency-correctness + speed harnesses
 launchers/                 – ready-to-run llama-server invocations (docker + flags)
-decomp-router/             – the companion decomposition router (code + eval + honest framing)
+decomp-router/             – the built-in server fan-out decomposer (in-engine code + eval gauntlets)
 ```
 
 ## Acknowledgements

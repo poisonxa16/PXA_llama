@@ -61,7 +61,7 @@ See `build/build-sm60.sh` and `docs/OLD-CARD-GUIDE.md`.
 - `benchmarks/speed-test.sh` — single + aggregate‑concurrent tok/s probe.
 - `docs/*` — root‑cause writeup, old‑card guide, compute‑bound measurement, MTP notes.
 - `launchers/*` — ready‑to‑run server invocations.
-- `decomp-router/*` — the companion decomposition router.
+- `decomp-router/*` — the built‑in, flag‑toggled server fan‑out decomposer (in‑engine code + gauntlets).
 
 ## Not changed
 

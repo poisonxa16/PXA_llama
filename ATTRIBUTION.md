@@ -27,8 +27,9 @@ the MoE handling, the quant formats, the hybrid graph builders, the MTP plumbing
    `SCHED_MAX_COPIES`, targeting the P100 that upstream images don't build for.
 3. **Documentation & measurement** — the old‑card FP16/DP4A economics guide, the compute‑bound
    measurement, the per‑model max‑settings, and reproducible benchmarks.
-4. **The decomposition router** (companion) — a purpose‑built bilingual dependency cross‑encoder +
-   gated fan‑out, an implementation of Skeleton‑of‑Thought tailored for idle old‑card rigs.
+4. **The built‑in fan‑out decomposer** — a purpose‑built bilingual dependency cross‑encoder + gated
+   fan‑out, compiled *into the server* and toggled by a flag; an implementation of Skeleton‑of‑Thought
+   tailored for idle old‑card rigs.
 
 See `CHANGELOG.md` for the exact, file‑level deltas.
 
